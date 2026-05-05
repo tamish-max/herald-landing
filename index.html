@@ -12,8 +12,10 @@
   <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://tamish-max.github.io/herald-landing/public/hero.png" />
+  <link rel="canonical" href="https://tamish-max.github.io/herald-landing/" />
+  <meta name="theme-color" content="#0a0a0a" />
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0a'/%3E%3Ctext x='4' y='24' font-size='22' font-family='monospace' font-weight='bold' fill='%237cff7c'%3E%26gt;%3C/text%3E%3C/svg%3E" />
+  <link rel="icon"href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0a'/%3E%3Ctext x='4' y='24' font-size='22' font-family='monospace' font-weight='bold' fill='%237cff7c'%3E%26gt;%3C/text%3E%3C/svg%3E" />
 
   <style>
     /* ── reset & base ─────────────────────────────────────────────── */
@@ -59,11 +61,34 @@
       z-index: 1;
     }
 
+    /* faint grid overlay */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(124,255,124,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,255,124,0.025) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse at top, rgba(0,0,0,0.55), transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at top, rgba(0,0,0,0.55), transparent 70%);
+      z-index: 1;
+    }
+
     main { position: relative; z-index: 2; }
     .container {
       max-width: 880px;
       margin: 0 auto;
       padding: 0 24px;
+    }
+    .container.wide { max-width: 1080px; }
+
+    /* universal focus ring */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 1px;
     }
 
     /* ── nav ───────────────────────────────────────────────────────── */
@@ -100,16 +125,17 @@
 
     /* ── hero (image-first, two-column on desktop) ────────────────── */
     .hero { padding: 64px 0 56px; }
+    .hero .container { max-width: 1080px; }
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-      gap: 48px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 56px;
       align-items: center;
     }
     .hero-card { position: relative; }
     .hero-card img {
       width: 100%;
-      max-width: 440px;
+      max-width: 480px;
       height: auto;
       display: block;
       filter: drop-shadow(0 0 80px rgba(124,255,124,0.10));
@@ -120,15 +146,29 @@
       50%      { transform: translateY(-6px); }
     }
     .version-pill {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       font-size: 11px;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       color: var(--accent);
       border: 1px solid var(--accent);
-      padding: 4px 10px;
+      padding: 4px 12px 4px 10px;
       margin-bottom: 18px;
       box-shadow: 0 0 18px rgba(124,255,124,0.10);
+    }
+    .version-pill .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse-dot 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0.45; transform: scale(0.85); }
+      50%      { opacity: 1;    transform: scale(1.15); }
     }
     .hero-title {
       font-size: 30px;
@@ -384,6 +424,77 @@
     .copy-btn:hover { color: var(--accent); border-color: var(--accent); }
     .copy-btn.copied { color: var(--accent); border-color: var(--accent); }
 
+    /* language badge on code blocks */
+    .lang-badge {
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--dim);
+      background: var(--bg);
+      padding: 2px 8px;
+      border: 1px solid var(--line);
+    }
+    .code.has-badge pre { padding-top: 18px; }
+
+    /* OS tabs */
+    .os-tabs {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-bottom: -1px;
+      position: relative;
+      z-index: 2;
+    }
+    .os-tab {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-bottom: none;
+      color: var(--dim);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 8px 14px;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+    .os-tab:hover { color: var(--fg); }
+    .os-tab.active {
+      color: var(--accent);
+      background: var(--bg-2);
+      border-color: var(--line);
+      border-bottom: 1px solid var(--bg-2);
+    }
+    .os-panel { display: none; }
+    .os-panel.active { display: block; }
+
+    /* ── tools section ─────────────────────────────────────────────── */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .tool {
+      border: 1px solid var(--line);
+      background: var(--bg-2);
+      padding: 16px 18px;
+      transition: border-color 0.18s ease, transform 0.18s ease;
+    }
+    .tool:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .tool .name {
+      color: var(--accent);
+      font-size: 13px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .tool .name::before { content: "fn "; color: var(--dim-2); font-weight: 400; }
+    .tool .desc { color: var(--dim); font-size: 12.5px; line-height: 1.5; }
+
     .step {
       color: var(--dim);
       font-size: 12px;
@@ -420,6 +531,28 @@
       font-size: 14px;
     }
     .callout .ctas { gap: 12px; }
+
+    /* ── early-access mini-cards ───────────────────────────────────── */
+    .ea-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin: 6px 0 22px;
+    }
+    .ea-card {
+      border: 1px solid var(--dim-2);
+      padding: 18px 18px 16px;
+      background: rgba(124,255,124,0.02);
+    }
+    .ea-card .head {
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .ea-card .head::before { content: "▸ "; }
+    .ea-card p { color: var(--dim); font-size: 13px; line-height: 1.55; margin: 0; }
 
     /* ── footer ────────────────────────────────────────────────────── */
     footer {
@@ -458,6 +591,7 @@
       <div class="links">
         <a href="#how">how it works</a>
         <a href="#why">why</a>
+        <a href="#tools">tools</a>
         <a href="#quickstart">quickstart</a>
         <a href="#access">early access</a>
       </div>
@@ -474,7 +608,7 @@
         </div>
 
         <div class="hero-text">
-          <div class="version-pill">v0.3.0 · closed beta</div>
+          <div class="version-pill"><span class="dot" aria-hidden="true"></span>v0.3.0 · closed beta</div>
 
           <h1 class="hero-title">
             A multi-agent product launch pipeline,<br/>
@@ -580,23 +714,84 @@
     </div>
   </section>
 
+  <!-- ── tools ───────────────────────────────────────────────────── -->
+  <section id="tools">
+    <div class="container reveal">
+      <div class="section-label">the 8 tools</div>
+      <h2>A small, sharp surface area.</h2>
+      <p style="color:var(--dim); font-size:14px; margin-bottom:24px; max-width:620px;">
+        herald exposes exactly eight MCP tools. Your client (Claude Code, Cursor, Copilot CLI) sees them as callable functions. No hidden state, no magic.
+      </p>
+      <div class="tool-grid">
+        <div class="tool"><div class="name">pm_plan</div><div class="desc">Reads your brief, produces the agent-1 instruction file.</div></div>
+        <div class="tool"><div class="name">run_research</div><div class="desc">Web research pass. Outputs <code style="color:var(--accent)">01_research.md</code>.</div></div>
+        <div class="tool"><div class="name">run_brand</div><div class="desc">Brand & messaging. Outputs <code style="color:var(--accent)">02_brand_messaging.md</code>.</div></div>
+        <div class="tool"><div class="name">run_ux</div><div class="desc">UX & user flows. Outputs <code style="color:var(--accent)">03_ux.md</code>.</div></div>
+        <div class="tool"><div class="name">run_gtm</div><div class="desc">Go-to-market plan. Two parallel sub-agents (4a + 4b).</div></div>
+        <div class="tool"><div class="name">assemble_plan</div><div class="desc">Stitches everything into <code style="color:var(--accent)">final_product_plan.md</code>.</div></div>
+        <div class="tool"><div class="name">checkpoint</div><div class="desc">Pauses for human approval, iteration notes, or skip.</div></div>
+        <div class="tool"><div class="name">run_workflow</div><div class="desc">The orchestrator. One call, end-to-end, with all four checkpoints.</div></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ── quickstart ──────────────────────────────────────────────── -->
   <section id="quickstart">
     <div class="container reveal">
       <div class="section-label">quickstart</div>
       <h2>Five minutes, zero ceremony.</h2>
 
-      <div class="step">01 — download (macOS arm64 shown)</div>
-      <div class="code">
-        <button class="copy-btn" data-copy="curl -L -o herald https://github.com/tamish-max/herald-releases/releases/latest/download/herald-darwin-arm64 && chmod +x herald && sudo mv herald /usr/local/bin/">copy</button>
-        <div class="label">macOS / Linux — pick your platform binary</div>
+      <div class="step">01 — download (single static binary)</div>
+      <div class="os-tabs" role="tablist">
+        <button class="os-tab active" data-os="mac-arm" role="tab">macOS · arm64</button>
+        <button class="os-tab" data-os="mac-x64" role="tab">macOS · intel</button>
+        <button class="os-tab" data-os="linux"   role="tab">Linux · x86_64</button>
+        <button class="os-tab" data-os="win"     role="tab">Windows · x86_64</button>
+      </div>
+
+      <div class="os-panel active" data-os="mac-arm">
+        <div class="code has-badge">
+          <span class="lang-badge">bash</span>
+          <button class="copy-btn" data-copy="curl -L -o herald https://github.com/tamish-max/herald-releases/releases/latest/download/herald-darwin-arm64 && chmod +x herald && sudo mv herald /usr/local/bin/">copy</button>
 <pre><span class="prompt">$ </span>curl -L -o herald \
     https://github.com/tamish-max/herald-releases/releases/latest/download/herald-darwin-arm64
 <span class="prompt">$ </span>chmod +x herald && sudo mv herald /usr/local/bin/</pre>
+        </div>
+      </div>
+
+      <div class="os-panel" data-os="mac-x64">
+        <div class="code has-badge">
+          <span class="lang-badge">bash</span>
+          <button class="copy-btn" data-copy="curl -L -o herald https://github.com/tamish-max/herald-releases/releases/latest/download/herald-darwin-amd64 && chmod +x herald && sudo mv herald /usr/local/bin/">copy</button>
+<pre><span class="prompt">$ </span>curl -L -o herald \
+    https://github.com/tamish-max/herald-releases/releases/latest/download/herald-darwin-amd64
+<span class="prompt">$ </span>chmod +x herald && sudo mv herald /usr/local/bin/</pre>
+        </div>
+      </div>
+
+      <div class="os-panel" data-os="linux">
+        <div class="code has-badge">
+          <span class="lang-badge">bash</span>
+          <button class="copy-btn" data-copy="curl -L -o herald https://github.com/tamish-max/herald-releases/releases/latest/download/herald-linux-amd64 && chmod +x herald && sudo mv herald /usr/local/bin/">copy</button>
+<pre><span class="prompt">$ </span>curl -L -o herald \
+    https://github.com/tamish-max/herald-releases/releases/latest/download/herald-linux-amd64
+<span class="prompt">$ </span>chmod +x herald && sudo mv herald /usr/local/bin/</pre>
+        </div>
+      </div>
+
+      <div class="os-panel" data-os="win">
+        <div class="code has-badge">
+          <span class="lang-badge">powershell</span>
+          <button class="copy-btn" data-copy="iwr -Uri https://github.com/tamish-max/herald-releases/releases/latest/download/herald-windows-amd64.exe -OutFile herald.exe">copy</button>
+<pre><span class="prompt">PS&gt; </span>iwr -Uri https://github.com/tamish-max/herald-releases/releases/latest/download/herald-windows-amd64.exe `
+       -OutFile herald.exe
+<span class="comment"># move herald.exe somewhere on your PATH</span></pre>
+        </div>
       </div>
 
       <div class="step">02 — install your license key</div>
-      <div class="code">
+      <div class="code has-badge">
+        <span class="lang-badge">bash</span>
         <button class="copy-btn" data-copy="export HERALD_LICENSE='HERALD-...your-key...'">copy</button>
         <div class="label">we email this to you after you fill the form</div>
 <pre><span class="prompt">$ </span>export HERALD_LICENSE=<span style="color:var(--warn)">'HERALD-...your-key...'</span>
@@ -606,13 +801,15 @@
       </div>
 
       <div class="step">03 — set your anthropic key</div>
-      <div class="code">
+      <div class="code has-badge">
+        <span class="lang-badge">bash</span>
         <button class="copy-btn" data-copy="export ANTHROPIC_API_KEY=sk-ant-...">copy</button>
 <pre><span class="prompt">$ </span>export ANTHROPIC_API_KEY=sk-ant-...</pre>
       </div>
 
       <div class="step">04 — wire it in (.mcp.json)</div>
-      <div class="code">
+      <div class="code has-badge">
+        <span class="lang-badge">json</span>
         <button class="copy-btn" data-copy='{"mcpServers":{"herald":{"command":"herald","env":{"ANTHROPIC_API_KEY":"${ANTHROPIC_API_KEY}","HERALD_LICENSE":"${HERALD_LICENSE}"}}}}'>copy</button>
 <pre>{
   <span style="color:var(--accent)">"mcpServers"</span>: {
@@ -628,7 +825,8 @@
       </div>
 
       <div class="step">05 — run</div>
-      <div class="code">
+      <div class="code has-badge">
+        <span class="lang-badge">bash</span>
         <button class="copy-btn" data-copy="claude  # then: use run_workflow with brief_path './product_brief.md'">copy</button>
 <pre><span class="prompt">$ </span>claude
 <span class="comment">// then, in the chat:</span>
@@ -644,22 +842,22 @@
       <h2>I'm looking for ~20 testers to break this in good faith.</h2>
 
       <div class="callout">
-        <h3>What you get</h3>
-        <p>
-          A signed binary for your platform. A 30-day license key emailed to you.
-          A private channel to the maintainer. Your name in the v1.0 credits.
-        </p>
-        <h3 style="margin-top:18px;">What we want back</h3>
-        <p>
-          The rough edges. The things that confused you. The moment you nearly
-          closed the tab. Honest, specific feedback &mdash; not flattery.
-        </p>
-        <h3 style="margin-top:18px;">What we promise</h3>
-        <p>
-          Your data stays on your machine. We never see your prompts, your API key,
-          or your output. The license check is fully offline. No phone-home, ever.
-        </p>
-        <div class="ctas" style="margin-top:24px;">
+        <h3>What you get · what we want · what we promise</h3>
+        <div class="ea-grid">
+          <div class="ea-card">
+            <div class="head">what you get</div>
+            <p>A signed binary for your platform. A 30-day license key emailed to you. A direct line to the maintainer. Your name in the v1.0 credits.</p>
+          </div>
+          <div class="ea-card">
+            <div class="head">what we want back</div>
+            <p>The rough edges. The things that confused you. The moment you nearly closed the tab. Honest, specific feedback &mdash; not flattery.</p>
+          </div>
+          <div class="ea-card">
+            <div class="head">what we promise</div>
+            <p>Your data stays on your machine. We never see your prompts, your API key, or your output. License check is fully offline. No phone-home, ever.</p>
+          </div>
+        </div>
+        <div class="ctas" style="margin-top:8px;">
           <!-- TODO: replace YOUR-FORM-URL with your Tally / Google Form / Typeform URL -->
           <a class="btn primary" href="https://YOUR-FORM-URL" target="_blank" rel="noopener">request access</a>
           <a class="btn" href="https://github.com/tamish-max/herald-releases/releases/latest" target="_blank" rel="noopener">browse releases</a>
@@ -816,6 +1014,34 @@
         }
       });
     });
+  })();
+
+  // ── OS tab picker ──────────────────────────────────────────────
+  (function () {
+    var tabs = document.querySelectorAll(".os-tab");
+    var panels = document.querySelectorAll(".os-panel");
+    if (!tabs.length) return;
+
+    function activate(os) {
+      tabs.forEach(function (t) { t.classList.toggle("active", t.dataset.os === os); });
+      panels.forEach(function (p) { p.classList.toggle("active", p.dataset.os === os); });
+    }
+    tabs.forEach(function (t) {
+      t.addEventListener("click", function () { activate(t.dataset.os); });
+    });
+
+    // auto-detect best default
+    var ua = (navigator.userAgent || "").toLowerCase();
+    var plat = (navigator.platform || "").toLowerCase();
+    var detected = null;
+    if (/win/.test(plat) || /windows/.test(ua)) detected = "win";
+    else if (/linux/.test(plat) || /linux/.test(ua)) detected = "linux";
+    else if (/mac/.test(plat) || /mac/.test(ua)) {
+      // crude arm64 hint: Apple Silicon Macs report "MacIntel" too,
+      // but most modern Macs are arm — keep arm as default for mac.
+      detected = "mac-arm";
+    }
+    if (detected) activate(detected);
   })();
 </script>
 </body>
