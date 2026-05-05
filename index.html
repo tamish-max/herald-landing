@@ -3,14 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AI-CMO — a multi-agent product launch pipeline, in your terminal</title>
-  <meta name="description" content="An MCP server in Go that runs PM → Research → Brand → UX → GTM with human checkpoints. Single binary. Stdio transport. Survives crashes." />
+  <title>herald — a multi-agent product launch pipeline, in your terminal</title>
+  <meta name="description" content="An MCP server in Go that runs PM → Research → Brand → UX → GTM with human checkpoints. Single binary. Local. No cloud. No telemetry." />
 
-  <meta property="og:title" content="AI-CMO — multi-agent product launch pipeline" />
-  <meta property="og:description" content="PM → Research → Brand → UX → GTM with human checkpoints. One binary. Drop-in MCP server for Claude Code, Cursor, Copilot." />
+  <meta property="og:title" content="herald — multi-agent product launch pipeline" />
+  <meta property="og:description" content="PM → Research → Brand → UX → GTM with human checkpoints. One binary. Drop-in MCP server for Claude Code, Cursor, Copilot. Local. No cloud. No telemetry." />
+  <meta property="og:image" content="/public/hero.png" />
   <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/public/hero.png" />
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='28' font-family='monospace' fill='%237cff7c'%3E%3E%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0a'/%3E%3Ctext x='4' y='24' font-size='22' font-family='monospace' font-weight='bold' fill='%237cff7c'%3E%26gt;%3C/text%3E%3C/svg%3E" />
 
   <style>
     /* ── reset & base ─────────────────────────────────────────────── */
@@ -368,7 +371,7 @@
   <!-- ── nav ─────────────────────────────────────────────────────── -->
   <nav>
     <div class="container">
-      <div class="brand">ai-cmo</div>
+      <div class="brand">herald</div>
       <div class="links">
         <a href="#how">how it works</a>
         <a href="#why">why</a>
@@ -381,14 +384,18 @@
   <!-- ── hero ────────────────────────────────────────────────────── -->
   <header class="hero">
     <div class="container">
-      <pre class="ascii-logo" aria-label="AI-CMO">
-   █████╗ ██╗      ██████╗███╗   ███╗ ██████╗
-  ██╔══██╗██║     ██╔════╝████╗ ████║██╔═══██╗
-  ███████║██║     ██║     ██╔████╔██║██║   ██║
-  ██╔══██║██║     ██║     ██║╚██╔╝██║██║   ██║
-  ██║  ██║██║     ╚██████╗██║ ╚═╝ ██║╚██████╔╝
-  ╚═╝  ╚═╝╚═╝      ╚═════╝╚═╝     ╚═╝ ╚═════╝
+      <pre class="ascii-logo" aria-label="herald">
+██╗  ██╗███████╗██████╗  █████╗ ██╗     ██████╗
+██║  ██║██╔════╝██╔══██╗██╔══██╗██║     ██╔══██╗
+███████║█████╗  ██████╔╝███████║██║     ██║  ██║
+██╔══██║██╔══╝  ██╔══██╗██╔══██║██║     ██║  ██║
+██║  ██║███████╗██║  ██║██║  ██║███████╗██████╔╝
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝
       </pre>
+
+      <div class="hero-image-wrap">
+        <img src="/public/hero.png" alt="herald — local-first launch pipeline on an SD card" class="hero-image" loading="eager" />
+      </div>
 
       <div class="tagline-wrap">
         <span class="prompt">$&nbsp;</span><span id="typed" class="typed"></span><span class="cursor" aria-hidden="true"></span>
@@ -399,6 +406,8 @@
         with mandatory human checkpoints. One binary. Survives crashes. Works in
         Claude&nbsp;Code, Cursor, VS&nbsp;Code, Copilot&nbsp;CLI.
       </p>
+
+      <p class="manifesto">LOCAL. NO CLOUD. NO TELEMETRY.</p>
 
       <div class="ctas">
         <a class="btn primary" href="#access">request early access</a>
@@ -480,21 +489,21 @@
 
       <div class="step">01 — download (macOS arm64 shown)</div>
       <div class="code">
-        <button class="copy-btn" data-copy="curl -L -o mvp-workflow-mcp https://github.com/tamish-max/ai-cmo-releases/releases/latest/download/mvp-workflow-mcp-darwin-arm64 && chmod +x mvp-workflow-mcp && sudo mv mvp-workflow-mcp /usr/local/bin/">copy</button>
+        <button class="copy-btn" data-copy="curl -L -o herald https://github.com/tamish-max/herald-releases/releases/latest/download/herald-darwin-arm64 && chmod +x herald && sudo mv herald /usr/local/bin/">copy</button>
         <div class="label">macOS / Linux — pick your platform binary</div>
-<pre><span class="prompt">$ </span>curl -L -o mvp-workflow-mcp \
-    https://github.com/tamish-max/ai-cmo-releases/releases/latest/download/mvp-workflow-mcp-darwin-arm64
-<span class="prompt">$ </span>chmod +x mvp-workflow-mcp && sudo mv mvp-workflow-mcp /usr/local/bin/</pre>
+<pre><span class="prompt">$ </span>curl -L -o herald \
+    https://github.com/tamish-max/herald-releases/releases/latest/download/herald-darwin-arm64
+<span class="prompt">$ </span>chmod +x herald && sudo mv herald /usr/local/bin/</pre>
       </div>
 
       <div class="step">02 — install your license key</div>
       <div class="code">
-        <button class="copy-btn" data-copy="export MVPWF_LICENSE='MVPWF-...your-key...'">copy</button>
+        <button class="copy-btn" data-copy="export HERALD_LICENSE='HERALD-...your-key...'">copy</button>
         <div class="label">we email this to you after you fill the form</div>
-<pre><span class="prompt">$ </span>export MVPWF_LICENSE=<span style="color:var(--warn)">'MVPWF-...your-key...'</span>
+<pre><span class="prompt">$ </span>export HERALD_LICENSE=<span style="color:var(--warn)">'HERALD-...your-key...'</span>
 <span class="comment"># or persist it:</span>
-<span class="prompt">$ </span>mkdir -p ~/.mvp-workflow-mcp && \
-    echo <span style="color:var(--warn)">'MVPWF-...'</span> > ~/.mvp-workflow-mcp/license</pre>
+<span class="prompt">$ </span>mkdir -p ~/.herald && \
+    echo <span style="color:var(--warn)">'HERALD-...'</span> > ~/.herald/license</pre>
       </div>
 
       <div class="step">03 — set your anthropic key</div>
@@ -505,14 +514,14 @@
 
       <div class="step">04 — wire it in (.mcp.json)</div>
       <div class="code">
-        <button class="copy-btn" data-copy='{"mcpServers":{"mvp-workflow":{"command":"mvp-workflow-mcp","env":{"ANTHROPIC_API_KEY":"${ANTHROPIC_API_KEY}","MVPWF_LICENSE":"${MVPWF_LICENSE}"}}}}'>copy</button>
+        <button class="copy-btn" data-copy='{"mcpServers":{"herald":{"command":"herald","env":{"ANTHROPIC_API_KEY":"${ANTHROPIC_API_KEY}","HERALD_LICENSE":"${HERALD_LICENSE}"}}}}'>copy</button>
 <pre>{
   <span style="color:var(--accent)">"mcpServers"</span>: {
-    <span style="color:var(--accent)">"mvp-workflow"</span>: {
-      <span style="color:var(--accent)">"command"</span>: <span style="color:var(--warn)">"mvp-workflow-mcp"</span>,
+    <span style="color:var(--accent)">"herald"</span>: {
+      <span style="color:var(--accent)">"command"</span>: <span style="color:var(--warn)">"herald"</span>,
       <span style="color:var(--accent)">"env"</span>: {
         <span style="color:var(--accent)">"ANTHROPIC_API_KEY"</span>: <span style="color:var(--warn)">"${ANTHROPIC_API_KEY}"</span>,
-        <span style="color:var(--accent)">"MVPWF_LICENSE"</span>:     <span style="color:var(--warn)">"${MVPWF_LICENSE}"</span>
+        <span style="color:var(--accent)">"HERALD_LICENSE"</span>:    <span style="color:var(--warn)">"${HERALD_LICENSE}"</span>
       }
     }
   }
@@ -545,7 +554,7 @@
         <div class="ctas">
           <!-- TODO: replace YOUR-FORM-URL with your Tally / Google Form / Typeform URL -->
           <a class="btn primary" href="https://YOUR-FORM-URL" target="_blank" rel="noopener">request access</a>
-          <a class="btn" href="https://github.com/tamish-max/ai-cmo-releases/releases/latest" target="_blank" rel="noopener">browse releases</a>
+          <a class="btn" href="https://github.com/tamish-max/herald-releases/releases/latest" target="_blank" rel="noopener">browse releases</a>
         </div>
       </div>
     </div>
@@ -555,7 +564,7 @@
   <footer>
     <div class="container">
       built with go &nbsp;·&nbsp; mcp protocol &nbsp;·&nbsp;
-      <a href="https://github.com/tamish-max/ai-cmo-releases">github.com/tamish-max/ai-cmo-releases</a>
+      <a href="https://github.com/tamish-max/herald-releases">github.com/tamish-max/herald-releases</a>
     </div>
   </footer>
 
@@ -567,7 +576,7 @@
     var phrases = [
       "ship a product launch plan in one terminal session.",
       "PM → Research → Brand → UX → GTM, with humans in the loop.",
-      "one binary. one brief. one launch plan."
+      "local. no cloud. no telemetry."
     ];
     var el = document.getElementById("typed");
     if (!el) return;

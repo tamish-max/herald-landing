@@ -1,6 +1,6 @@
-# ai-cmo-landing
+# herald-landing
 
-Static landing page for **AI-CMO** (closed beta).
+Static landing page for **herald** (closed beta).
 
 This repo contains nothing but the marketing site — a single `index.html`
 with inline CSS and a tiny inline JS sprinkle. No build step, no
@@ -8,8 +8,8 @@ framework, no dependencies.
 
 The actual product (a Go MCP server) lives elsewhere:
 
-- **Source (private, invite-only):** `tamish-max/AI-CMO`
-- **Signed binaries (public, key-gated):** [`tamish-max/ai-cmo-releases`](https://github.com/tamish-max/ai-cmo-releases)
+- **Source (private, invite-only):** `tamish-max/herald`
+- **Signed binaries (public, key-gated):** [`tamish-max/herald-releases`](https://github.com/tamish-max/herald-releases)
 
 ## Local preview
 
@@ -22,7 +22,7 @@ python3 -m http.server 8000
 ## Deploy on Vercel
 
 1. Go to https://vercel.com/new
-2. Import this repo (`tamish-max/ai-cmo-landing`)
+2. Import this repo (`tamish-max/herald-landing`)
 3. Framework preset: **Other** (no build needed)
 4. Build command: *(leave blank)*
 5. Output directory: *(leave blank — root)*
@@ -45,7 +45,7 @@ Things you'll likely want to update:
 
 - `https://YOUR-FORM-URL` — the early-access form (4 occurrences)
 - The `STEP 01 … STEP 05` quickstart block — keep in sync with the
-  install instructions in `tamish-max/ai-cmo-releases`
+  install instructions in `tamish-max/herald-releases`
 - The version pill in the hero ("v0.2.0 · closed beta")
 
 ## Why a separate repo?
