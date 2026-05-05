@@ -98,8 +98,46 @@
     }
     nav .links a:hover { color: var(--accent); }
 
-    /* ── hero ──────────────────────────────────────────────────────── */
-    .hero { padding: 80px 0 60px; }
+    /* ── hero (image-first, two-column on desktop) ────────────────── */
+    .hero { padding: 64px 0 56px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: 48px;
+      align-items: center;
+    }
+    .hero-card { position: relative; }
+    .hero-card img {
+      width: 100%;
+      max-width: 440px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 0 80px rgba(124,255,124,0.10));
+      animation: floaty 6s ease-in-out infinite;
+    }
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
+    }
+    .version-pill {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 4px 10px;
+      margin-bottom: 18px;
+      box-shadow: 0 0 18px rgba(124,255,124,0.10);
+    }
+    .hero-title {
+      font-size: 30px;
+      line-height: 1.2;
+      font-weight: 600;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+    .hero-title .accent { color: var(--accent); }
     .ascii-logo {
       color: var(--accent);
       font-size: 13px;
@@ -115,9 +153,10 @@
       50%      { text-shadow: 0 0 22px rgba(124,255,124,0.32); }
     }
     .tagline-wrap {
-      font-size: 17px;
+      font-size: 15px;
       min-height: 1.6em;
-      margin-bottom: 8px;
+      margin-bottom: 18px;
+      color: var(--dim);
     }
     .tagline-wrap .prompt { color: var(--accent); }
     .tagline-wrap .typed { color: var(--fg); }
@@ -135,8 +174,52 @@
     .subtagline {
       color: var(--dim);
       font-size: 14px;
-      margin-bottom: 36px;
-      max-width: 620px;
+      margin-bottom: 22px;
+      max-width: 540px;
+    }
+    .subtagline .accent { color: var(--fg); }
+    .manifesto {
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 4px;
+      margin: 0 0 28px;
+      padding: 10px 14px;
+      border-top: 1px solid var(--dim-2);
+      border-bottom: 1px solid var(--dim-2);
+      display: inline-block;
+      text-shadow: 0 0 10px rgba(124,255,124,0.30);
+    }
+    @media (max-width: 820px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+      .hero-card img { max-width: 320px; margin: 0 auto; }
+      .hero-card { text-align: center; }
+      .hero-title { font-size: 24px; }
+    }
+
+    /* ── trust strip ───────────────────────────────────────────────── */
+    .trust {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 0;
+      background: var(--bg-2);
+    }
+    .trust-row {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 24px;
+      color: var(--dim);
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .trust-row span::before {
+      content: "▸ ";
+      color: var(--accent);
+      margin-right: 4px;
+    }
+    @media (max-width: 600px) {
+      .trust-row { gap: 12px; font-size: 10px; letter-spacing: 1px; }
     }
     .ctas {
       display: flex;
@@ -384,37 +467,53 @@
   <!-- ── hero ────────────────────────────────────────────────────── -->
   <header class="hero">
     <div class="container">
-      <pre class="ascii-logo" aria-label="herald">
-██╗  ██╗███████╗██████╗  █████╗ ██╗     ██████╗
-██║  ██║██╔════╝██╔══██╗██╔══██╗██║     ██╔══██╗
-███████║█████╗  ██████╔╝███████║██║     ██║  ██║
-██╔══██║██╔══╝  ██╔══██╗██╔══██║██║     ██║  ██║
-██║  ██║███████╗██║  ██║██║  ██║███████╗██████╔╝
-╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═════╝
-      </pre>
+      <div class="hero-grid">
 
-      <div class="hero-image-wrap">
-        <img src="/public/hero.png" alt="herald — local-first launch pipeline on an SD card" class="hero-image" loading="eager" />
-      </div>
+        <div class="hero-card">
+          <img src="/public/hero.png" alt="herald — local-first product launch pipeline, on a memory card" loading="eager" />
+        </div>
 
-      <div class="tagline-wrap">
-        <span class="prompt">$&nbsp;</span><span id="typed" class="typed"></span><span class="cursor" aria-hidden="true"></span>
-      </div>
+        <div class="hero-text">
+          <div class="version-pill">v0.3.0 · closed beta</div>
 
-      <p class="subtagline">
-        A drop-in MCP server that runs <span style="color:var(--fg)">PM → Research → Brand → UX → GTM</span>
-        with mandatory human checkpoints. One binary. Survives crashes. Works in
-        Claude&nbsp;Code, Cursor, VS&nbsp;Code, Copilot&nbsp;CLI.
-      </p>
+          <h1 class="hero-title">
+            A multi-agent product launch pipeline,<br/>
+            <span class="accent">in your terminal.</span>
+          </h1>
 
-      <p class="manifesto">LOCAL. NO CLOUD. NO TELEMETRY.</p>
+          <div class="tagline-wrap">
+            <span class="prompt">$&nbsp;</span><span id="typed" class="typed"></span><span class="cursor" aria-hidden="true"></span>
+          </div>
 
-      <div class="ctas">
-        <a class="btn primary" href="#access">request early access</a>
-        <a class="btn" href="#how">see how it works</a>
+          <p class="subtagline">
+            A drop-in MCP server that runs <span class="accent">PM → Research → Brand → UX → GTM</span>
+            with mandatory human checkpoints. One Go binary. Survives crashes. Works in
+            Claude&nbsp;Code, Cursor, VS&nbsp;Code, Copilot&nbsp;CLI.
+          </p>
+
+          <div class="manifesto">LOCAL &nbsp;·&nbsp; NO CLOUD &nbsp;·&nbsp; NO TELEMETRY</div>
+
+          <div class="ctas">
+            <a class="btn primary" href="#access">request early access</a>
+            <a class="btn" href="#how">see how it works</a>
+          </div>
+        </div>
+
       </div>
     </div>
   </header>
+
+  <!-- ── trust strip ─────────────────────────────────────────────── -->
+  <div class="trust">
+    <div class="container">
+      <div class="trust-row">
+        <span>single binary · ~12 MB</span>
+        <span>5 platforms</span>
+        <span>stdio + http</span>
+        <span>your anthropic key, your machine</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ── how it works (animated pipeline) ────────────────────────── -->
   <section id="how">
@@ -547,11 +646,20 @@
       <div class="callout">
         <h3>What you get</h3>
         <p>
-          Direct access to signed binaries, a private channel to me, and your name in
-          the v1.0 credits. What I want back: the rough edges, the things that confused
-          you, the moment you nearly closed the tab.
+          A signed binary for your platform. A 30-day license key emailed to you.
+          A private channel to the maintainer. Your name in the v1.0 credits.
         </p>
-        <div class="ctas">
+        <h3 style="margin-top:18px;">What we want back</h3>
+        <p>
+          The rough edges. The things that confused you. The moment you nearly
+          closed the tab. Honest, specific feedback &mdash; not flattery.
+        </p>
+        <h3 style="margin-top:18px;">What we promise</h3>
+        <p>
+          Your data stays on your machine. We never see your prompts, your API key,
+          or your output. The license check is fully offline. No phone-home, ever.
+        </p>
+        <div class="ctas" style="margin-top:24px;">
           <!-- TODO: replace YOUR-FORM-URL with your Tally / Google Form / Typeform URL -->
           <a class="btn primary" href="https://YOUR-FORM-URL" target="_blank" rel="noopener">request access</a>
           <a class="btn" href="https://github.com/tamish-max/herald-releases/releases/latest" target="_blank" rel="noopener">browse releases</a>
@@ -561,10 +669,15 @@
   </section>
 
   <!-- ── footer ──────────────────────────────────────────────────── -->
-  <footer>
-    <div class="container">
-      built with go &nbsp;·&nbsp; mcp protocol &nbsp;·&nbsp;
-      <a href="https://github.com/tamish-max/herald-releases">github.com/tamish-max/herald-releases</a>
+    <footer>
+    <div class="container" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; align-items:center;">
+      <div>
+        <span style="color:var(--accent);">&gt;</span> herald &nbsp;·&nbsp; v0.3.0 &nbsp;·&nbsp; closed beta
+      </div>
+      <div style="font-size:11px;">
+        built with go &nbsp;·&nbsp; mcp protocol &nbsp;·&nbsp;
+        <a href="https://github.com/tamish-max/herald-releases">github.com/tamish-max/herald-releases</a>
+      </div>
     </div>
   </footer>
 
