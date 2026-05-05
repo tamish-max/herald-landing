@@ -43,7 +43,7 @@ Everything is in `index.html`. Search for the section markers
 
 Things you'll likely want to update:
 
-- `https://YOUR-FORM-URL` — the early-access form (4 occurrences)
+- `https://tally.so/r/jaGYNa` — the early-access form (live)
 - The `STEP 01 … STEP 05` quickstart block — keep in sync with the
   install instructions in `tamish-max/herald-releases`
 - The version pill in the hero ("v0.2.0 · closed beta")
